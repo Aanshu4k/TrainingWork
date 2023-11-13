@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>HTML Form with JS</h1>
+    <form>
+        <label for="fn">First Name</label>
+        <input type="text" id="fn" /><br/>
+        <label for="ln">Last Name</label>
+        <input type="text" id="ln" />
+    </form>
+    <button type="submit" onClick={handleSubmit()}>Click</button>
+    <p id="name">
+        
+    </p>
+    <script>
+        function handleSubmit(){
+        var fn=document.getElementById("fn").value;
+        var ln=document.getElementById("ln").value;
+        
+        document.getElementById("name").innerHTML=fn+" "+ln;
+      
+        }
+    </script>
+</body>
+
+</html>
