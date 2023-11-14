@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Question 4</title>
+    </head>
+    <body>
+    <button onclick="appendList()">AddList</button>
+        <ul id="mylist"></ul>
+        <script>
+            function appendList(){
+                 
+                var list=document.getElementById("mylist");
+                var item=document.createElement("li");                item.appendChild(document.createTextNode("new item"));
+                list.appendChild(item);
+            }
+        </script>
+        
+    </body>
+</html>
