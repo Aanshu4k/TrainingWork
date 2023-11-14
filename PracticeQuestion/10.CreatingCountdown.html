@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating a Countdown</title>
+</head>
+
+<body>
+    
+    <button onclick="countdown()">Start Countdown</button>
+    <p id="countdown"></p>
+    <script>
+        var count = 10;
+        function countdown(){
+            document.getElementById("countdown").innerHTML = count;
+            if (count === 0) {
+                return;
+            } 
+            else{
+                count--;
+                setTimeout(countdown, 1000);
+            }
+        }
+    </script>
+</body>
+
+
+</html>

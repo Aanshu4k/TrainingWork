@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecting Elements By Class</title>
+</head>
+
+<body onload="handleColorChange()">
+    <div class="colorBox">
+        1
+    </div>
+    <div class="colorBox">
+        2
+    </div>
+    <div class="colorBox">
+        3
+    </div>
+    <script>
+        function handleColorChange() {
+            let colorBox = document.getElementsByClassName("colorBox");
+            var color = ["red", "green", "blue"];
+            for (let i = 0; i < colorBox.length; i++) {
+                colorBox[i].style.backgroundColor = color[i];
+            }
+        }
+    </script>
+</body>
+
+</html>
