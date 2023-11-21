@@ -9,6 +9,7 @@ class Contact extends React.Component {
                     <input type='text' /><br />
                     <label>Query</label><br/>
                     <textarea type='textarea' style={{}}/><br />
+                    <button type='submit'>SEND</button>
                 </form>
             </>
         );
