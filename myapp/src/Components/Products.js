@@ -22,7 +22,7 @@ const Products = () => {
         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const [searchTerm, setSearchTerm] = useState('');
     
-    const [products, setProducts] = useState([
+    const [products] = useState([
         { id: 'P001', name: 'Fogg Rose', price: '$5.99', manuDate: date },
         { id: 'P002', name: 'Yardley Women', price: '$10.99', manuDate: date },
         { id: 'P003', name: 'Yardley French', price: '$20.99', manuDate: date },
