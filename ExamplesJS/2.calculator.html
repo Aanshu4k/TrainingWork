@@ -13,10 +13,22 @@
     <button type="submit" className="res" onClick={subt()}>SUBTRACT</button>
     <button type="submit" className="res" onClick={mult()}>MULTIPLY</button>
     <button type="submit" className="res" onClick={div()}>DIVIDE</button>
-    <p id="result"></p>
-
-    <script src="/calculator.js">
-     
+    <br />
+    <button onClick=handleFetchData() id="fetchData">Fetch Data</button>
+    <!-- <p id="container">Paragraph Container
+    </p> -->
+    <script>
+        const para = document.createElement('p');
+        para.innerHTML = "Container paragraph"
+        para.setAttribute("id", "container");
+        document.body.appendChild(para);
+        const handleFetchData = () => {
+            fetch('https://dummyjson.com/products/1')
+                .then(res => res.json())
+                .then((data) => {
+                    document.getElementById('container').innerHTML = JSON.stringify(data);
+                })
+        }
     </script>
 </body>
 

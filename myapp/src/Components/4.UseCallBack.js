@@ -8,8 +8,8 @@ function ChildComponent(props) {
 function ParentComponentUseCallBack() {
     const [count, setCount] = useState(0);
     const handleClick = useCallback(() => {
-        setCount((prevCount) => prevCount + 1);
-    }, []);
+        setCount(() => count + 1);
+    }, [count]);
     return (
         <div>
             <ChildComponent onClick={handleClick} />

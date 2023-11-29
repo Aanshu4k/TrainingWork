@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 function ExpensiveComputation(number){
     
     let result=0;
-    for(let i=0;i<10000000;i++){
+    for(let i=0;i<10;i++){
         result+=number;
     }
     console.log('Running Expensive Computation...');
@@ -10,7 +10,7 @@ function ExpensiveComputation(number){
    
 }
 function ComplexComponent() {
-    const [number,setNumber] = useState(1);
+    const [number,setNumber] = useState(0);
     const [increment,setIncrement]=useState(0);
     const computedValue= useMemo(()=>ExpensiveComputation(number),[number])// it only calls the function when number changes 
     return (
