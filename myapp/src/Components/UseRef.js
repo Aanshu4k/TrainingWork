@@ -11,7 +11,7 @@ function Timer() {
 
     function Start() {
         setCount((count) => count + 1);
-        timeoutRef.current = setTimeout(Start, 200);
+        timeoutRef.current = setTimeout(Start, 500);
         console.log(timeoutRef)
     }
 
@@ -20,7 +20,7 @@ function Timer() {
         clearTimeout(timeoutRef.current);
     };
     const Reset = () => {
-        setCount(countRef.current = 0);
+        setCount(countRef.current=0);
         clearTimeout(timeoutRef.current);
         timeoutRef.current = 0;
         console.log(timeoutRef)
