@@ -1,16 +1,28 @@
-
-import React from 'react';
-import Timer from './Components/UseRef.js';
-import TodoList from './Components/ToDoList.js';
-import { useState } from 'react';
-import BSESSurvey from './Components/BSESSurvey.js';
-function App() {
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import NormalComponent from './Components/NormalComponent';
+import PureComponent from './Components/PureComponent';
+import HomePage from './Components/HomePage';
+import AboutPage from './Components/AboutPage';
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <div>
-      <BSESSurvey />
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <Link to="/">Home</Link> | {isLoggedIn && <Link to="/about">About</Link>}
+        </nav>
+        <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
+          {isLoggedIn ? 'Log Out' : 'Log In'}
+        </button>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={isLoggedIn ? <AboutPage /> : <Navigate to="/" />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
 
@@ -37,7 +49,36 @@ export default App;
 
 
 
+// const Home = () => <h2><button>Login</button></h2>;
+// const About = () => <h2>About</h2>;
+// const Contact = () => <h2>Contact</h2>;
+// const NotFound = () => <h2>404 Not Found</h2>;
 
+// let [isLoggedIn, setisLoggedIn] = useState(false);
+//   const handleChange = () => {
+//     setisLoggedIn(!isLoggedIn)
+//   }
+//   return (
+//     <Router>
+//       <nav>
+//         <ul>
+//           <li><Link to="/">Home</Link></li>
+//           {isLoggedIn && <li><Link to="/about">About</Link></li>}
+//           <li><Link to="/contact">Contact</Link></li>
+//           <li><b>Need About section?<br /></b><input type='radio' name='radio' onChange={handleChange} />Yes{" "}
+//             <input type='radio' name='radio' onChange={handleChange} />No<br />
+//           </li>
+//         </ul>
+//       </nav>
+
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/about" element={<About />} />
+//         <Route path="/contact" element={<Contact />} />
+//         <Route path="*" element={<NotFound />} />
+//       </Routes>
+//     </Router>
+//   );
 
 {/* <MasterPage>
     //   {/* Children of MasterPage Component */}
