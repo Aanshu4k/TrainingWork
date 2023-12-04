@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+// import {
+//     FacebookShareButton,
+//     TelegramShareButton,
+//     TwitterShareButton,
+//     WhatsappShareButton,
+// } from "react-share";
 import {
-    FacebookShareButton,
-    TelegramShareButton,
-    TwitterShareButton,
-    WhatsappShareButton,
-} from "react-share";
-import {
-    FacebookShareCount, TelegramShareCount, TwitterShareCount, WhatsappShareCount
+    FacebookShareCount, 
+    // TelegramShareCount, TwitterShareCount, WhatsappShareCount
 } from "react-share";
 import {
     FacebookIcon,
-    FacebookMessengerIcon,
-    TelegramIcon,
-    TwitterIcon,
+    // FacebookMessengerIcon,
+    // TelegramIcon,
+    // TwitterIcon,
     WhatsappIcon,
 } from "react-share";
 const RandomImage = () => {
@@ -37,13 +38,16 @@ const RandomImage = () => {
     return (
         <div>
             <h1>Random Image Generator</h1>
-            {image && <img src={image} alt="Random Nature Image" style={{ height: '15rem', width: '30rem' }} />}
+             {/* <img src={image} alt="Random Nature Image" style={{ height: '15rem', width: '30rem' }} /> */}
             <br />
             <button type='submit' onClick={generateImage}>GENERATE</button><br />
             Share : {" "}<FacebookIcon size={32} round={true} />{" "}<WhatsappIcon size={32} round={true} />
             <FacebookShareCount url={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent({})}`}>
                 {(shareCount) => <span className="myShareCountWrapper">{shareCount}</span>}
             </FacebookShareCount>
+            <div>
+                
+            </div>
         </div>
     );
 };
