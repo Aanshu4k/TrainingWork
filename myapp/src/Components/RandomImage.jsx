@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-// import {
-//     FacebookShareButton,
-//     TelegramShareButton,
-//     TwitterShareButton,
-//     WhatsappShareButton,
-// } from "react-share";
+import {
+    FacebookShareButton,
+    TelegramShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
+} from "react-share";
 import {
     FacebookShareCount, 
     // TelegramShareCount, TwitterShareCount, WhatsappShareCount
@@ -13,7 +13,7 @@ import {
     FacebookIcon,
     // FacebookMessengerIcon,
     // TelegramIcon,
-    // TwitterIcon,
+    TwitterIcon,
     WhatsappIcon,
 } from "react-share";
 const RandomImage = () => {
@@ -36,18 +36,15 @@ const RandomImage = () => {
     };
 
     return (
-        <div>
+        <div >
             <h1>Random Image Generator</h1>
-             {/* <img src={image} alt="Random Nature Image" style={{ height: '15rem', width: '30rem' }} /> */}
-            <br />
-            <button type='submit' onClick={generateImage}>GENERATE</button><br />
-            Share : {" "}<FacebookIcon size={32} round={true} />{" "}<WhatsappIcon size={32} round={true} />
-            <FacebookShareCount url={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent({})}`}>
-                {(shareCount) => <span className="myShareCountWrapper">{shareCount}</span>}
-            </FacebookShareCount>
-            <div>
-                
-            </div>
+             <img src={image} alt="Random Nature Image" style={{ height: '15rem', width: '30rem',border:'solid gold 10px',borderRadius:'50px',boxShadow:'5px 5px 15px red' }} />
+            <br /><br/>
+            <button type='submit' onClick={generateImage}>GENERATE</button><br /><br/>
+            Share : {" "}
+            <FacebookShareButton url={image}><FacebookIcon size={32} round={true} /></FacebookShareButton>
+            <WhatsappShareButton url={image}><WhatsappIcon size={32} round={true} /></WhatsappShareButton>
+            <TwitterShareButton url={image}><TwitterIcon size={32} round={true} /></TwitterShareButton>
         </div>
     );
 };
