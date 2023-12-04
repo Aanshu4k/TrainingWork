@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
+import './App.css'
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import NormalComponent from './Components/NormalComponent';
 import PureComponent from './Components/PureComponent';
 import HomePage from './Components/HomePage';
 import AboutPage from './Components/AboutPage';
+import RandomImage from './Components/RandomImage';
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link> | {isLoggedIn && <Link to="/about">About</Link>}
-        </nav>
-        <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
-          {isLoggedIn ? 'Log Out' : 'Log In'}
-        </button>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={isLoggedIn ? <AboutPage /> : <Navigate to="/" />} />
-        </Routes>
-      </div>
-    </Router>
+    <>
+    <RandomImage />
+    </>
   );
 };
 
@@ -39,8 +30,21 @@ export default App;
 
 
 
-
-
+// const [isLoggedIn, setIsLoggedIn] = useState(false);
+// <Router>
+//       <div>
+//         <nav>
+//           <Link to="/">Home</Link> | {isLoggedIn && <Link to="/about">About</Link>}
+//         </nav>
+//         <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
+//           {isLoggedIn ? 'Log Out' : 'Log In'}
+//         </button>
+//         <Routes>
+//           <Route path="/" element={<HomePage />} />
+//           <Route path="/about" element={isLoggedIn ? <AboutPage /> : <Navigate to="/" />} />
+//         </Routes>
+//       </div>
+//     </Router>
 
 
 
