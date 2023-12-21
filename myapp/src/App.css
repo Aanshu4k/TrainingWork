@@ -1,11 +1,12 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
+  backdrop-filter: blur(50px);
 }
 *{
   margin-left: 5px;
   margin-right: 5px;
-  justify-content: center;
-  text-align: center;
+  /* justify-content: center;
+  text-align: center; */
 }
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
