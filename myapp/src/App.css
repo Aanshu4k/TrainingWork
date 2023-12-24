@@ -7,9 +7,11 @@
   background-color:rgb(255, 249, 241);
 }
 * {
-  margin: 0; /* Reset margin to zero */
-  padding: 0; /* Reset padding to zero */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin: 2px; 
+  padding: 2px; 
+  background-color: rgb(244,244,244);
+  box-sizing: border-box; 
+  font-size: 10px;
 }
 
 .App-logo {
@@ -47,18 +49,30 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 10px; /* Adjust padding as needed */
+  padding: 10px; 
 }
 
 .appList {
   list-style-type: none;
   text-decoration: none;
   margin: 5px;
-  padding: 5px; /* Adjust padding as needed */
+  padding: 5px;
 }
 
 /* Additional styles can be added or uncommented based on your design requirements */
-
+.app{
+  margin: 0;
+  padding: 0;
+}
+.container{
+  margin: 0 auto;
+  max-width: 100px;
+  padding: 40px;
+}
+.title{
+  font-size: 4.4rem;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
 /* .navbar {
   padding: 5px;
