@@ -9,9 +9,9 @@
 * {
   margin: 2px; 
   padding: 2px; 
-  background-color: rgb(244,244,244);
+  /* background-color: rgb(244,244,244);
   box-sizing: border-box; 
-  font-size: 10px;
+  font-size: 10px; */
 }
 
 .App-logo {

@@ -1,12 +1,13 @@
 import React from "react";
-import "./App.css";
-import SearchPhoto from "./Comp_ImageSearch/SearchPhoto";
+// import "./App.css";
+import NavBar from './Component_website/NavBar.jsx';
 const App = () => {
   return (
     <div className="App">
-      <div className="container"></div>
-      <div className="title">React Photo Search App</div>
-      <SearchPhoto/>
+      <div className="App-header">
+      <NavBar />
+      </div>
+
     </div>
   );
 };
