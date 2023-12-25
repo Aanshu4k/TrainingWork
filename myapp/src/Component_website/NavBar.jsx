@@ -41,7 +41,7 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div style={{ marginTop: "70px"}}>
+      <div style={{ marginTop: "70px" }}>
         <Routes>
           <Route path="/Home" element={<Home />} />
           <Route path="/Products" element={<Products />} />

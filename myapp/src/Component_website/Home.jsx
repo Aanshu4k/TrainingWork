@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 const Home = () => {
     return (
         <Card style={{ width: '40rem', margin: '5rem' }}>
-            <Card.Img variant="top" src="./logo2.jpg" />
+            <Card.Img variant="top" src="./logo512.png" />
             <Card.Body>
                 <Card.Title>Welcome to Our E-Commerce Website</Card.Title>
                 <Card.Text>
@@ -12,7 +12,7 @@ const Home = () => {
                 </Card.Text>
                 <Button variant="primary">Order Now</Button>
             </Card.Body>
-            <Card.Img variant="top" src="./logo2.jpg" />
+            <Card.Img variant="top" src="./logo192.png" />
             <Card.Body>
                 <Card.Title>Welcome to Our E-Commerce Website</Card.Title>
                 <Card.Text>
