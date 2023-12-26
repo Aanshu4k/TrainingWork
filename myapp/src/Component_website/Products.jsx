@@ -1,12 +1,12 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
-import { toast, Toaster } from 'react-hot-toast';
-import './Products.css';
+import { toast, Toaster } from "react-hot-toast";
+import "./Products.css";
 import AddForm from "./AddForm";
 
 const CustDataTable = () => {
@@ -27,8 +27,6 @@ const CustDataTable = () => {
       .catch((error) => console.log("Error fetching data : ", error));
   }, []);
 
-
-  
   const handleEdit = (id, prodName, price, brand) => {
     setSelectedProductId(id);
     setProductName(prodName);
@@ -78,10 +76,7 @@ const CustDataTable = () => {
   return (
     <div>
       <div>
-        <Toaster
-          position="top-right"
-          reverseOrder={false}
-        />
+        <Toaster position="top-right" reverseOrder={false} />
       </div>
       <h1>Products</h1>
       <Table
@@ -112,9 +107,27 @@ const CustDataTable = () => {
               <td>Rs.{product.price}</td>
               <td>{product.brand}</td>
               <td>
-                <Button variant="primary" type="submit" className="delete-btn" onClick={() => handleDelete(product.id)}>Delete</Button>{" "}
-                <Button variant="primary" type="submit" className="edit-btn"
-                  onClick={() => handleEdit(product.id, product.prodName, product.price, product.brand)}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="delete-btn"
+                  onClick={() => handleDelete(product.id)}
+                >
+                  Delete
+                </Button>{" "}
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="edit-btn"
+                  onClick={() =>
+                    handleEdit(
+                      product.id,
+                      product.prodName,
+                      product.price,
+                      product.brand
+                    )
+                  }
+                >
                   Edit
                 </Button>
               </td>
@@ -122,39 +135,76 @@ const CustDataTable = () => {
           ))}
         </tbody>
       </Table>
-      <Button type='submit' variant="primary" onClick={() => { setShowAddForm(!showAddForm) }} style={{ marginLeft: '45rem' }} >+ ADD</Button>
+      <Button
+        type="submit"
+        variant="primary"
+        onClick={() => {
+          setShowAddForm(!showAddForm);
+        }}
+        style={{ marginLeft: "45rem" }}
+      >
+        + ADD
+      </Button>
 
       {showAddForm && (
-        <AddForm setShowAddForm={setShowAddForm} showAddForm={showAddForm}/>
+        <div className="modal-overlay">
+          <AddForm setShowAddForm={setShowAddForm} showAddForm={showAddForm} />
+        </div>
       )}
 
       {showForm && (
-        <div style={{ marginTop: "20px", display: 'flex' }}>
-          <Form className="update-form" style={{display:'inline'}}>
+        <div style={{ marginTop: "20px", display: "flex" }}>
+          <Form className="update-form" style={{ display: "inline" }}>
             <h3>Update Product Detail</h3>
-            <FloatingLabel controlId="floatingInput" label="ID" className="mb-3"
+            <FloatingLabel
+              controlId="floatingInput"
+              label="ID"
+              className="mb-3"
             >
               <Form.Control type="text" value={selectedProductId} readOnly />
             </FloatingLabel>
 
-            <FloatingLabel controlId="floatingInput" label="Product Name" className="mb-3">
-              <Form.Control type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Product Name"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+              />
             </FloatingLabel>
 
-            <FloatingLabel controlId="floatingInput" label="Price" className="mb-3">
-              <Form.Control type="number"
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Price"
+              className="mb-3"
+            >
+              <Form.Control
+                type="number"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)} />
+                onChange={(e) => setPrice(e.target.value)}
+              />
             </FloatingLabel>
 
-            <FloatingLabel controlId="floatingInput" label="Brand" className="mb-3">
-              <Form.Control type="text"
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Brand"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
                 value={brand}
-                onChange={(e) => setBrand(e.target.value)} />
+                onChange={(e) => setBrand(e.target.value)}
+              />
             </FloatingLabel>
 
-            <Button type="submit" className="update-btn"
-              onClick={() => handleUpdate(selectedProductId)}>
+            <Button
+              type="submit"
+              className="update-btn"
+              onClick={() => handleUpdate(selectedProductId)}
+            >
               UPDATE
             </Button>
           </Form>
