@@ -1,5 +1,4 @@
 import React from "react";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -7,35 +6,37 @@ import Navbar from "react-bootstrap/Navbar";
 import Home from "./Home";
 import Products from "./Products";
 import ContactUs from "./ContactUs";
+import './NavBar.css';
 
 const NavBar = () => {
   return (
     <Router>
       <Navbar
-        bg="dark"
-        data-bs-theme="dark"
+        // bg="dark"
+        // data-bs-theme="dark"
         fixed="top"
         collapseOnSelect
         expand="lg"
-        className="bg-body-tertiary"
+        className="mynavbar"
+        // className="bg-body-tertiary"
       >
-        <Container style={{}}>
-          <Navbar.Brand as={Link} to="/Home">
-            E-Commerce
+        <Container>
+          <Navbar.Brand as={Link} to="/Home" style={{color:'orange'}}>
+            <h5 className="webpage-name">GROCERY STORE</h5>{" "}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/Home">
-                Home
+                <b className="nav-btn">HOME</b>
               </Nav.Link>
               <Nav.Link as={Link} to="/Products">
-                Products
+                <b className="nav-btn">PRODUCTS</b>
               </Nav.Link>
             </Nav>
             <Nav>
               <Nav.Link as={Link} to="/ContactUs">
-                Contact Us
+                <b className="nav-btn">CONTACT US</b>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

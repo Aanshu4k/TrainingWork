@@ -7,7 +7,6 @@ const App = () => {
       <div className="App-header">
       <NavBar />
       </div>
-
     </div>
   );
 };
