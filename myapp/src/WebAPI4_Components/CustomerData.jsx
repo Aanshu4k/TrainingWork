@@ -6,45 +6,43 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import { toast, Toaster } from "react-hot-toast";
-import "./Products.css";
-import AddForm from "./AddForm";
 
-const CustDataTable = () => {
-  const [prodData, setProdData] = useState([]);
+const CustomerData = () => {
+  const [data, setData] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [updatedProduct, setUpdateProduct] = useState({
-    productName: "", price: null, brand: ""
+  const [updatedCustomer, setUpdateCustomer] = useState({
+    id:null,firstName: "", lastName: "", phoneNumber: ""
   });
   const [showForm, setShowForm] = useState(false);
   const [validated, setValidated] = useState(false);
 
   useEffect(() => {
     axios
-      .get("https://localhost:7247/api/Product")
+      .get("http://localhost:5085/api/Customers")
       .then((response) => {
         console.log(response.data);
-        setProdData(response.data);
+        setData(response.data);
       })
       .catch((error) => console.log("Error fetching data : ", error));
   }, []);
 
-  const handleEdit = (id, prodName, price, brand) => {
-    setUpdateProduct({
+  const handleEdit = (id, firstName, lastName, phoneNumber) => {
+    setUpdateCustomer({
       id: id,
-      productName: prodName,
-      price: price,
-      brand: brand
+      firstName:firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber
     })
     setShowForm(!showForm);
   };
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://localhost:7247/api/Product/${id}`)
+      .delete(`http://localhost:5085/api/Customers/${id}`)
       .then((response) => {
         console.log("Delete request successfull", response);
         toast.success(`Product with ID : ${id} deleted successfully`);
-        setProdData((prevData) =>
+        setData((prevData) =>
           prevData.filter((product) => product.id !== id)
         );
       })
@@ -61,36 +59,34 @@ const CustDataTable = () => {
     }
     setValidated(true);
     const { name, value } = e.target;
-    setUpdateProduct({ ...updatedProduct, [name]: value });
+    setUpdateCustomer({ ...updatedCustomer, [name]: value });
   }
   const handleUpdate = async (id) => {
     setShowForm(!showForm);
     try {
       if (validated) {
         await axios
-          .put(`https://localhost:7247/api/Product/${id}`,
+          .put(`http://localhost:5085/api/Customers/${id}`,
             {
-              id: updatedProduct.id,
-              prodName: updatedProduct.productName,
-              price: updatedProduct.price,
-              brand: updatedProduct.brand,
+              id: updatedCustomer.id,
+              firstName:updatedCustomer.firstName,
+              lastName:updatedCustomer.lastName,
+              phoneNumber: updatedCustomer.phoneNumber,
             }
           )
           .then((response) => {
             toast.success(`Product with ID : ${id} updated successfully`);
-            setProdData((prevData) =>
-              prevData.filter((product) => product.id !== id)
-            );
             console.log(response);
           })
           .catch((error) => {
-            toast.error(`Product with ID : ${id} does not exist!`);
+            toast.error(`Customer with ID : ${id} does not exist!`);
             console.error("Error updating customer", error);
           });
       }
       else {
         toast.error("Kindly fill all the fields in the form!");
       }
+      window.location.reload();
     }
     catch {
       toast.error("Kindly enter valid input!");
@@ -116,19 +112,19 @@ const CustDataTable = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Brand</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
             <th>Delete/Edit</th>
           </tr>
         </thead>
         <tbody>
-          {prodData.map((product) => (
+          {data.map((product) => (
             <tr key={product.id}>
               <td>{product.id}</td>
-              <td>{product.prodName}</td>
-              <td>Rs.{product.price}</td>
-              <td>{product.brand}</td>
+              <td>{product.firstName}</td>
+              <td>{product.lastName}</td>
+              <td>{product.phoneNumber}</td>
               <td>
                 <Button
                   variant="danger"
@@ -142,7 +138,7 @@ const CustDataTable = () => {
                   type="submit"
                   className="edit-btn"
                   onClick={() =>
-                    handleEdit(product.id, product.prodName, product.price, product.brand)}>
+                    handleEdit(product.id, product.firstName, product.lastName, product.phoneNumber)}>
                   Edit
                 </Button>
               </td>
@@ -155,32 +151,26 @@ const CustDataTable = () => {
         + ADD
       </Button>
 
-      {showAddForm && (
-        <div className="modal-overlay">
-          <AddForm setShowAddForm={setShowAddForm} showAddForm={showAddForm} />
-        </div>
-      )}
-
       {showForm && (
         <div style={{ marginTop: "20px", display: "flex" }}>
           <Form noValidate validated={validated} onSubmit={handleUpdate} className="update-form" style={{ display: "inline" }}>
-            <h3>Update Product Detail</h3>
+            <h3>Update Customer Detail</h3>
             <FloatingLabel
               controlId="floatingInput"
               label="ID"
               className="mb-3"
             >
-              <Form.Control type="text" value={updatedProduct.id} readOnly />
+              <Form.Control type="text" value={updatedCustomer.id} readOnly />
             </FloatingLabel>
 
             <FloatingLabel
               controlId="floatingInput"
-              label="Product Name"
+              label="First Name"
               className="mb-3">
               <Form.Control
                 type="text"
-                name="productName"
-                value={updatedProduct.productName}
+                name="firstName"
+                value={updatedCustomer.firstName}
                 onChange={handleInputChange}
                 pattern="^[a-zA-Z0-9\s]+$"
                 required
@@ -192,15 +182,15 @@ const CustDataTable = () => {
 
             <FloatingLabel
               controlId="floatingInput"
-              label="Price"
+              label="Last Name"
               className="mb-3"
             >
               <Form.Control
                 type="text"
-                name="price"
-                value={updatedProduct.price}
+                name="lastName"
+                value={updatedCustomer.lastName}
                 onChange={handleInputChange}
-                pattern="^\d*\.?\d*$"
+                pattern="^[a-zA-Z0-9\s]+$"
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -210,13 +200,13 @@ const CustDataTable = () => {
 
             <FloatingLabel
               controlId="floatingInput"
-              label="Brand"
+              label="Phone Number"
               className="mb-3"
             >
               <Form.Control
                 type="text"
-                name="brand"
-                value={updatedProduct.brand}
+                name="phoneNumber"
+                value={updatedCustomer.phoneNumber}
                 onChange={handleInputChange}
               />
             </FloatingLabel>
@@ -224,7 +214,7 @@ const CustDataTable = () => {
             <Button
               type="submit"
               variant="warning"
-              onClick={() => handleUpdate(updatedProduct.id)}
+              onClick={() => handleUpdate(updatedCustomer.id)}
             >
               UPDATE
             </Button>
@@ -234,4 +224,4 @@ const CustDataTable = () => {
     </div>
   );
 };
-export default CustDataTable;
+export default CustomerData;

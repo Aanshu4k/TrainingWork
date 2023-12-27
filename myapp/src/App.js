@@ -1,11 +1,11 @@
 import React from "react";
-// import "./App.css";
-import NavBar from './Component_website/NavBar.jsx';
+import CustomerData from "./WebAPI4_Components/CustomerData";
+
 const App = () => {
   return (
     <div className="App">
       <div className="App-header">
-      <NavBar />
+      <CustomerData />
       </div>
     </div>
   );

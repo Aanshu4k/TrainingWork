@@ -12,13 +12,10 @@ const NavBar = () => {
   return (
     <Router>
       <Navbar
-        // bg="dark"
-        // data-bs-theme="dark"
         fixed="top"
         collapseOnSelect
         expand="lg"
         className="mynavbar"
-        // className="bg-body-tertiary"
       >
         <Container>
           <Navbar.Brand as={Link} to="/Home" style={{color:'orange'}}>

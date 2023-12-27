@@ -38,7 +38,7 @@ const ContactUs = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           Submit
         </Button>
       </Form>

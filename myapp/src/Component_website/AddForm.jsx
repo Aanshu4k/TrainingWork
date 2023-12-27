@@ -10,11 +10,11 @@ import "./Products.css";
 
 const AddForm = (props) => {
   const [newProduct, setNewProduct] = useState({
-      id: "",
-      prodName: "",
-      price: "",
-      brand: "",
-    });
+    id: "",
+    prodName: "",
+    price: "",
+    brand: "",
+  });
   const [validated, setValidated] = useState(false);
 
   const handleInputChange = (e) => {
@@ -30,14 +30,24 @@ const AddForm = (props) => {
   const handleAdd = async (event) => {
     event.preventDefault();
     props.setShowAddForm(!props.showAddForm);
-    await axios
-      .post("https://localhost:7247/api/Product", newProduct)
-      .then((response) => {
-        console.log(response.data);
-        toast.success("Product Added Successfully!");
-      })
-      .catch((error) => toast.error("Error fetching data : ", error));
-    window.location.reload();
+    try {
+      if (validated) {
+        await axios
+          .post("https://localhost:7247/api/Product", newProduct)
+          .then((response) => {
+            console.log(response.data);
+            toast.success("Product Added Successfully!");
+          })
+      }
+      else {
+        toast.error("Kindly fill all the fields in the form!");
+      }
+      window.location.reload();
+    }
+    catch {
+      toast.error("Kindly enter valid input!");
+    }
+
   };
   return (
     <div style={{ marginTop: "20px", display: "block", width: "40rem" }}>
@@ -123,6 +133,9 @@ const AddForm = (props) => {
 
         <Button type="submit" className="add-btn" onClick={handleAdd}>
           ADD
+        </Button>{' '}
+        <Button variant="danger" type="submit" className="close-btn" onClick={() => { props.setShowAddForm(!props.showAddForm) }}>
+          CLOSE
         </Button>
       </Form>
     </div>
