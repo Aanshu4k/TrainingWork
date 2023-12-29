@@ -6,12 +6,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import { toast, Toaster } from "react-hot-toast";
+import AddCustomer from "./AddCustomer";
+
 
 const CustomerData = () => {
   const [data, setData] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [updatedCustomer, setUpdateCustomer] = useState({
-    id:null,firstName: "", lastName: "", phoneNumber: ""
+    id: null, firstName: "", lastName: "", phoneNumber: ""
   });
   const [showForm, setShowForm] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -29,7 +31,7 @@ const CustomerData = () => {
   const handleEdit = (id, firstName, lastName, phoneNumber) => {
     setUpdateCustomer({
       id: id,
-      firstName:firstName,
+      firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber
     })
@@ -52,14 +54,18 @@ const CustomerData = () => {
       });
   };
   const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateCustomer({ ...updatedCustomer, [name]: value });
+
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
+      setValidated(false);
     }
-    setValidated(true);
-    const { name, value } = e.target;
-    setUpdateCustomer({ ...updatedCustomer, [name]: value });
+    else
+      setValidated(true);
+    console.log("Validated = ", validated);
   }
   const handleUpdate = async (id) => {
     setShowForm(!showForm);
@@ -69,35 +75,30 @@ const CustomerData = () => {
           .put(`http://localhost:5085/api/Customers/${id}`,
             {
               id: updatedCustomer.id,
-              firstName:updatedCustomer.firstName,
-              lastName:updatedCustomer.lastName,
+              firstName: updatedCustomer.firstName,
+              lastName: updatedCustomer.lastName,
               phoneNumber: updatedCustomer.phoneNumber,
             }
           )
-          .then((response) => {
-            toast.success(`Product with ID : ${id} updated successfully`);
-            console.log(response);
-          })
-          .catch((error) => {
-            toast.error(`Customer with ID : ${id} does not exist!`);
-            console.error("Error updating customer", error);
-          });
+        toast.success(`Product with ID : ${id} updated successfully`);
+        setShowForm(!showForm);
+        window.location.reload();
       }
       else {
-        toast.error("Kindly fill all the fields in the form!");
+        toast.error("Invalid form input!");
       }
-      window.location.reload();
     }
-    catch {
-      toast.error("Kindly enter valid input!");
+    catch (error) {
+      toast.error(`Error updating customer with ID: ${id}`);
+      console.error("Error updating customer", error);
     }
   };
   return (
     <div>
       <div>
-        <Toaster position="top-right" reverseOrder={false} />
+        <Toaster position="top-center" reverseOrder={false} />
       </div>
-      <h1>Products</h1>
+      <h1>Customer</h1>
       <Table
         responsive
         style={{
@@ -151,9 +152,15 @@ const CustomerData = () => {
         + ADD
       </Button>
 
+      {showAddForm && (
+        <div className="modal-overlay">
+          <AddCustomer setShowAddForm={setShowAddForm} showAddForm={showAddForm} />
+        </div>
+      )}
+
       {showForm && (
         <div style={{ marginTop: "20px", display: "flex" }}>
-          <Form noValidate validated={validated} onSubmit={handleUpdate} className="update-form" style={{ display: "inline" }}>
+          <Form noValidate validated={!validated} onSubmit={handleUpdate} className="update-form" style={{ display: "inline" }}>
             <h3>Update Customer Detail</h3>
             <FloatingLabel
               controlId="floatingInput"
@@ -172,7 +179,7 @@ const CustomerData = () => {
                 name="firstName"
                 value={updatedCustomer.firstName}
                 onChange={handleInputChange}
-                pattern="^[a-zA-Z0-9\s]+$"
+                pattern="^[a-zA-Z.\s]+$"
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -190,7 +197,7 @@ const CustomerData = () => {
                 name="lastName"
                 value={updatedCustomer.lastName}
                 onChange={handleInputChange}
-                pattern="^[a-zA-Z0-9\s]+$"
+                pattern="^[a-zA-Z\s]+$"
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -208,14 +215,15 @@ const CustomerData = () => {
                 name="phoneNumber"
                 value={updatedCustomer.phoneNumber}
                 onChange={handleInputChange}
+                pattern="^[0-9\s]+$"
+                required
               />
             </FloatingLabel>
 
             <Button
               type="submit"
               variant="warning"
-              onClick={() => handleUpdate(updatedCustomer.id)}
-            >
+              onClick={() => handleUpdate(updatedCustomer.id)}>
               UPDATE
             </Button>
           </Form>
