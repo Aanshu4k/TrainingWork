@@ -7,7 +7,7 @@ import Cart from "./Cart";
 import "./Products.css";
 const Products = () => {
   const [prodData, setProdData] = useState([]);
-  const [cart, setCart] = useState([{ quantity: 0 }]);
+  const [cart, setCart] = useState([]);
   useEffect(() => {
     axios
       .get("https://dummyjson.com/products")
@@ -26,9 +26,7 @@ const Products = () => {
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
-    } 
-    else 
-        setCart((prevItems) => [...prevItems, { ...prod, quantity: 1 }]);
+    } else setCart((prevItems) => [...prevItems, { ...prod, quantity: 1 }]);
   };
   return (
     <div style={{ display: "flex" }}>
@@ -48,7 +46,11 @@ const Products = () => {
         ))}
       </div>
       <div className="cart-section">
-        <Cart cart={cart} setCart={setCart} addToCart={addToCart} />
+        <Cart
+          cart={cart}
+          setCart={setCart}
+          addToCart={addToCart}
+        />
       </div>
     </div>
   );

@@ -17,7 +17,8 @@ const Cart = (props) => {
     <>
       <h3>Your Cart</h3>
       <br />
-      {props.cart.map((items) => (
+      {
+      props.cart.map((items) => (
         <div key={items.id} className="Cart">
           <p>{items.title}</p>
           <p>Price: ${items.price}</p>
