@@ -1,0 +1,27 @@
+.product-card{
+    padding:10px;
+    margin:5px;
+    display: flex;
+    width: 16rem;
+    height: max-content;
+}
+.cart-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: max-content;
+    flex-direction: column;
+}
+.cart-section{
+    display: inline;
+}
+.products-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+div{
+    padding: 5px;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
