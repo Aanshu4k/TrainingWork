@@ -25,6 +25,7 @@ const AddForm = (props) => {
       e.preventDefault();
       e.stopPropagation();
     }
+
     setValidated(true);
   };
   const handleAdd = async (event) => {

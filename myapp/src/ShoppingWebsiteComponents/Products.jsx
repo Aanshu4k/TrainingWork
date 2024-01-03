@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import React from "react";
 import Button from "react-bootstrap/Button";
@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import Cart from "./Cart";
 import "./Products.css";
 const Products = () => {
+
   const [prodData, setProdData] = useState([]);
   const [cart, setCart] = useState([]);
   useEffect(() => {
@@ -18,7 +19,7 @@ const Products = () => {
       .catch((error) => console.log("Error fetching data : ", error));
   }, []);
 
-  const addToCart = (id) => {
+  const addToCart = useCallback((id) => {
     const prod = prodData.find((product) => product.id === id);
     if (cart.find((item) => item.id === id)) {
       setCart((prevCart) =>
@@ -27,10 +28,10 @@ const Products = () => {
         )
       );
     } else setCart((prevItems) => [...prevItems, { ...prod, quantity: 1 }]);
-  };
+  },[cart,prodData]);
   return (
     <div style={{ display: "flex" }}>
-      <div className="container">
+      <div className="products-container">
         {prodData.map((product) => (
           <Card style={{ width: "18rem" }}>
             <Card.Img variant="top" src={product.thumbnail} />

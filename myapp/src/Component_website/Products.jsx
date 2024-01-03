@@ -58,6 +58,7 @@ const CustDataTable = () => {
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
+      
     }
     setValidated(true);
     const { name, value } = e.target;
