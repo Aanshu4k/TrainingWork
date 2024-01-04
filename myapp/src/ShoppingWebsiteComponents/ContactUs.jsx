@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
 
 const ContactUs = () => {
   const [contact, setContact] = useState({
     name: '', email: '', message: ''
   });
+  const [data, setData] = useState([]);
   const [validated, setValidated] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5089/api/ContactUs")
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch((error) => console.log("Error fetching data : ", error));
+  }, []);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setContact({ ...contact, [name]: value })
@@ -26,12 +38,12 @@ const ContactUs = () => {
       if (validated) {
         const response = await axios.post('http://localhost:5089/api/ContactUs', contact)
         console.log(response.data)
-        alert('Data Submitted!')
+        toast.success("Your Response has been successfully submitted!");
+        window.location.reload();
       }
       else {
-        alert('Invalid form inputs!')
+        toast.error("Invalid input fields!");
       }
-
     }
     catch (error) {
       console.log(error.message)
@@ -40,6 +52,9 @@ const ContactUs = () => {
 
   return (
     <Container>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
       <h2>Contact Us</h2>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group controlId="formName">
@@ -84,6 +99,25 @@ const ContactUs = () => {
           Submit
         </Button>
       </Form>
+
+      <table style={{ border: '2px solid grey', margin: '20px', padding: '20px' }}>
+        <thead style={{ border: '2px solid grey', padding: '20px' }}>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map(item => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.email}</td>
+              <td>{item.message}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Container>
   );
 };

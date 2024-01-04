@@ -4,9 +4,9 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Cart from "./Cart";
+import {  Toaster } from "react-hot-toast";
 import "./Products.css";
 const Products = () => {
-
   const [prodData, setProdData] = useState([]);
   const [cart, setCart] = useState([]);
   useEffect(() => {
@@ -19,21 +19,30 @@ const Products = () => {
       .catch((error) => console.log("Error fetching data : ", error));
   }, []);
 
-  const addToCart = useCallback((id) => {
-    const prod = prodData.find((product) => product.id === id);
-    if (cart.find((item) => item.id === id)) {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } else setCart((prevItems) => [...prevItems, { ...prod, quantity: 1 }]);
-  },[cart,prodData]);
+  const addToCart = useCallback(async (id) => {
+    try{
+      const prod = prodData.find((product) => product.id === id);
+      if (cart.find((item) => item.id === id)) {
+        setCart((prevItems) =>
+          prevItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item));
+      }
+      else 
+        setCart((prevItems) => [...prevItems, { ...prod, quantity: 1 }]);
+    }
+    catch(error){
+      console.log(error.response)
+    }
+  }, [cart, prodData]);
+
+
   return (
     <div style={{ display: "flex" }}>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
       <div className="products-container">
         {prodData.map((product) => (
-          <Card style={{ width: "18rem" }}>
+          <Card className="product-card"  key={product.id}>
             <Card.Img variant="top" src={product.thumbnail} />
             <Card.Body>
               <Card.Title>{product.title}</Card.Title>

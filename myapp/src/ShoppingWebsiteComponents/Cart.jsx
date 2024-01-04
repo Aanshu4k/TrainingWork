@@ -1,7 +1,9 @@
 import Button from "react-bootstrap/Button";
+import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
+
 const Cart = (props) => {
-  const removeCart = (id) => {
+  const decrItems = (id) => {
     const item = props.cart.find(item => item.id === id);
     if (item.quantity > 1) {
       --item.quantity;
@@ -13,54 +15,63 @@ const Cart = (props) => {
     }
     console.log(props.cart);
   };
-  const placeOrder = async (cart) => {
-    const orderItems = cart.map(item =>({
-      title:item.title,
-      price:item.quantity,
-      quantity: item.quantity,
-    }));
-    console.log("Ordered items : ", orderItems)
-    try {
-      const response = await axios.post("http://localhost:5089/api/CartItems", orderItems);
-      console.log(response.data);
-      alert("Order Placed successfully!");
+
+  const buyItem = async (id) => {
+    const prod = props.cart.find((product) => product.id === id);
+    const orderItem = {
+      ItemId: prod.id,
+      Title: prod.title,
+      Price: prod.price,
+      Quantity: prod.quantity,
     }
-    catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error("Server responded with an error:", error.response.status);
-        console.error("Error data:", error.response.data);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error("No response received from the server:", error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Error setting up the request:", error.message);
-      }
+    const res = await axios.post("http://localhost:5089/api/CartItems", orderItem)
+    console.log(res.data)
+    if (res.data) {
+      toast.success(`Item with ID: ${id} booked!`);
     }
+  }
+  const deleteItem = async (id) => {
+    await axios.delete(`http://localhost:5089/api/CartItems/${id}`);
+    const updatedCart=props.cart.filter(item=>item.id!==id);
+    props.setCart(updatedCart)
+    toast.success(`Item with ID: ${id} deleted successfully!`, {
+      style: {
+        border: '1px solid #713200',
+        padding: '16px',
+        color: '#713200',
+      },
+      iconTheme: {
+        primary: '#713200',
+        secondary: '#FFFAEE',
+      },
+    });
   }
   return (
     <>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
       <h3>Your Cart</h3>
       <br />
       {
         props.cart.map((items) => (
           <div key={items.id} className="Cart">
-            <p>{items.title}</p>
-            <p>Price: ${items.price}</p>
-            <p>
+            <b>{items.title}</b>
+            <b>Price: ${items.price * items.quantity}</b>
+            <b>
               Quantity:{" "}
               <Button onClick={() => props.addToCart(items.id)}>+</Button>{" "}
               <Button variant="light" disabled={true}>{items.quantity}</Button>{" "}
-              <Button onClick={() => removeCart(items.id)}>-</Button>
-            </p>
-            <Button variant="danger" onClick={() => removeCart(items.id)}>
-              Remove
+              <Button onClick={() => decrItems(items.id)}>-</Button>
+            </b>
+            <Button variant="success" onClick={() => buyItem(items.id)}>
+              Buy
             </Button>
-          </div>
+            <Button variant="danger" onClick={() => deleteItem(items.id)}>
+              Delete
+            </Button>
+          </div >
         ))}
-      <Button onClick={() => placeOrder(props.cart)}>Place Order</Button>
     </>
   );
 };
