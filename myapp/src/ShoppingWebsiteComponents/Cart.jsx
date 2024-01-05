@@ -32,7 +32,7 @@ const Cart = (props) => {
   }
   const deleteItem = async (id) => {
     await axios.delete(`http://localhost:5089/api/CartItems/${id}`);
-    const updatedCart=props.cart.filter(item=>item.id!==id);
+    const updatedCart = props.cart.filter(item => item.id !== id);
     props.setCart(updatedCart)
     toast.success(`Item with ID: ${id} deleted successfully!`, {
       style: {

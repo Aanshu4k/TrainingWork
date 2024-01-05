@@ -1,11 +1,11 @@
 import React from "react";
-import NavBar from "./ShoppingWebsiteComponents/NavBar";
+import Grid from "./TestComponent/Grid";
 
 const App = () => {
   return (
     <div className="App">
       <div className="App-header">
-      <NavBar />
+      <Grid />
       </div>
     </div>
   );
