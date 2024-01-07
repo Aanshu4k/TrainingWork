@@ -3,9 +3,9 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+
 const Grid = () => {
     const [showGrid, setShowGrid] = useState(false);
-    const [showFeeder, setShowFeeder] = useState(false);
     const [showFeederTable, setShowFeederTable] = useState(false);
     const [circle, setCircle] = useState([]);
     const [gridData, setGridData] = useState([]);
@@ -16,12 +16,9 @@ const Grid = () => {
 
         axios.get('http://localhost:5125/api/GridData/GetGridData')
             .then((response) => setGridData(response.data))
-
-
-
     }, [])
-    const handleFeederData = () => {
-        axios.get('http://localhost:5125/api/GridData/GetFeederData')
+    const handleFeederData = (gridNo) => {
+        axios.get(`http://localhost:5125/api/GridData/GetFeederData?GRIDNO=${gridNo}`)
             .then((response) => setFeederData(response.data))
             setShowFeederTable(true)
     }
@@ -62,7 +59,7 @@ const Grid = () => {
                                     gridData.map((data =>
                                         <tr>
                                             <td>{data.id}</td>
-                                            <td><Button variant="primary" onClick={handleFeederData}>{data.gridNo}</Button>{' '}</td>
+                                            <td><Button variant="primary" onClick={()=>handleFeederData(data.gridNo)}>{data.gridNo}</Button>{' '}</td>
                                             <td>{data.name}</td>
                                             <td>0</td>
                                             <td>0</td>

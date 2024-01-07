@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import Cart from "./Cart";
 import {  Toaster } from "react-hot-toast";
 import "./Products.css";
+
 const Products = () => {
   const [prodData, setProdData] = useState([]);
   const [cart, setCart] = useState([]);
