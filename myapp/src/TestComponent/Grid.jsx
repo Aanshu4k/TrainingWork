@@ -34,7 +34,7 @@ const Grid = () => {
 
     return (
         <>
-            <h3>MONTHLY AUDIT</h3>
+            <h3 style={{filter:'drop-shadow(0 0 5px cyan)'}}>MONTHLY AUDIT</h3>
             <Form className="user-option-selection" >
                 <FloatingLabel controlId="floatingSelect" label="Month">
                     <Form.Control type="month" onChangeCapture={(e) => { setDataMonth(e.target.value) }} />
