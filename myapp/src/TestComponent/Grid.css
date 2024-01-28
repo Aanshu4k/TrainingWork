@@ -1,0 +1,38 @@
+.user-option-selection {
+    display: flex;
+    justify-content: space-between;
+    height: max-content;
+    border-radius: 5px;
+    border: 2px solid rgb(197, 197, 197);
+    padding: 10px;
+    box-shadow: 0 5px 5px grey;
+}
+
+.grid-audit-section {
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.grid-audit-table {
+    height: 350px;
+    overflow-y: scroll;
+    margin: 5px;
+    padding: 5px;
+}
+
+.feeder-data-section {
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    width:75rem;
+}
+
+.feeder-data-table {
+    height: 350px;
+    overflow-y: scroll;
+    margin: 5px;
+    padding: 5px;
+}

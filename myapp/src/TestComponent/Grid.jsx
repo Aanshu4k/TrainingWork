@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import FeederForm from "./FeederForm";
+import './Grid.css';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 const Grid = () => {
     const [showGrid, setShowGrid] = useState(false);
@@ -10,38 +13,45 @@ const Grid = () => {
     const [circle, setCircle] = useState([]);
     const [gridData, setGridData] = useState([]);
     const [feederData, setFeederData] = useState([]);
+    const [dataMonth, setDataMonth] = useState();
+    const [gridName, setGridName] = useState();
     useEffect(() => {
         axios.get('http://localhost:5125/api/GridData/GetCircle')
             .then((response) => setCircle(response.data))
+    }, [feederData])
 
-        axios.get('http://localhost:5125/api/GridData/GetGridData')
+    const handleGridData = useCallback((circle) => {
+        axios.get(`http://localhost:5125/api/GridData/GetGridData?circleName=${circle}`)
             .then((response) => setGridData(response.data))
-    }, [])
-    const handleFeederData = (gridNo) => {
+    }, []);
+
+    const handleFeederData = (gridNo, name) => {
         axios.get(`http://localhost:5125/api/GridData/GetFeederData?GRIDNO=${gridNo}`)
             .then((response) => setFeederData(response.data))
-            setShowFeederTable(true)
+        setGridName(name);
+        setShowFeederTable(true);
     }
+
     return (
         <>
-        <div>
-
-        </div>
-            <h3>MONTHLY AUDIT</h3>
-            <Form style={{ display: 'flex', justifyContent: 'space-between',height:'max-content' }}>
-                <Form.Label>Select Month
-                    <Form.Control type="date" onSelect={() => setShowGrid(true)} /></Form.Label>
-                <label>Circle
-                    <select>
+            <h3 style={{filter:'drop-shadow(0 0 5px cyan)'}}>MONTHLY AUDIT</h3>
+            <Form className="user-option-selection" >
+                <FloatingLabel controlId="floatingSelect" label="Month">
+                    <Form.Control type="month" onChangeCapture={(e) => { setDataMonth(e.target.value) }} />
+                </FloatingLabel>
+                <FloatingLabel controlId="floatingSelect" label="CIRCLE">
+                    <Form.Select onChange={(e) => handleGridData(e.target.value)} aria-label="Default select example">
                         {circle.map((item) => (
-                            <option value={item.name}>{item.name}</option>
+                            <option key={item.id} value={item.name}>{item.name}</option>
                         ))}
-                    </select> </label>
-                <Button variant="success" type="submit" >SUBMIT</Button>
+                    </Form.Select>
+                </FloatingLabel>
+                <Button variant="success" onClick={() => setShowGrid(true)}>SUBMIT</Button>
             </Form>
             {showGrid && (
-                <><h3>GRID AUDIT DETAILS</h3>
-                    <div style={{ height: '350px', overflowY: 'scroll', border: '2px solid grey', margin: '5px' }}>
+                <div className="grid-audit-section">
+                    <h4>GRID AUDIT DETAILS</h4>
+                    <div className="grid-audit-table">
                         <Table striped bordered hover style={{ height: '200px' }}>
                             <thead>
                                 <tr>
@@ -55,95 +65,71 @@ const Grid = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    gridData.map((data =>
-                                        <tr>
-                                            <td>{data.id}</td>
-                                            <td><Button variant="primary" onClick={()=>handleFeederData(data.gridNo)}>{data.gridNo}</Button>{' '}</td>
-                                            <td>{data.name}</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>date</td>
-                                        </tr>
-                                    ))}
-
+                                {gridData.map(((data, index) =>
+                                    <tr>
+                                        <td>{index + 1}</td>
+                                        <td><Button variant="primary" onClick={() => handleFeederData(data.gridNo, data.name)}>{data.gridNo}</Button>{' '}</td>
+                                        <td>{data.name}</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>{dataMonth}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
-                    </div></>
+                    </div>
+                </div>
             )}
-            <h3>Feeder Data</h3>
-            
-            {showFeederTable && (
-                <div style={{ height: '350px', overflowY: 'scroll', border: '2px solid grey', margin: '5px' }}>
-                    <Table striped bordered hover >
 
-                        <thead>
-                            <tr>
-                                <th>Feeder ID</th>
-                                <th>Feeder Name</th>
-                                <th>Voltage Level</th>
-                                <th>Status</th>
-                                <th>Meter No</th>
-                                <th>MF</th>
-                                <th>Import</th>
-                                <th>Export</th>
-                                <th>Remark</th>
-                                <th>Basis</th>
-                                <th>Feeder CAT</th>
-                                <th>Inter Exchange</th>
-                                <th>Div Sharing</th>
-                                <th>Division</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {feederData.map((data =>
+            {showFeederTable && (
+                <div className="feeder-data-section">
+                    <h3>Feeder Data</h3>
+                    <h4>Feeder Data for Grid: {gridName}</h4>
+                    <div className="feeder-data-table" >
+                        <Table striped bordered hover>
+                            <thead>
                                 <tr>
+                                    <th>Feeder ID</th>
+                                    <th>Feeder Name</th>
+                                    <th>Voltage Level</th>
+                                    <th>Status</th>
+                                    <th>Meter No</th>
+                                    <th>MF</th>
+                                    <th>Import</th>
+                                    <th>Export</th>
+                                    <th>Remark</th>
+                                    <th>Basis</th>
+                                    <th>Feeder CAT</th>
+                                    <th>Inter Exchange</th>
+                                    <th>Div Sharing</th>
+                                    <th>Division</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {feederData.map((data => <tr key={data.ID}>
                                     <td><Button>{data.feedeR_ID}</Button></td>
                                     <td>{data.connecT_WITH}</td>
                                     <td>{data.voltagE_LAVEL}</td>
                                     <td>{data.status}</td>
                                     <td>{data.meterno}</td>
                                     <td>{data.mf}</td>
-                                    <td>IMPORT</td>
-                                    <td>EXPORT</td>
-                                    <td>Remark</td>
-                                    <td>Basis</td>
+                                    <td>{data.import}</td>
+                                    <td>{data.export}</td>
+                                    <td>{data.remark}</td>
+                                    <td>{data.basis}</td>
                                     <td>{data.feedeR_CAT}</td>
                                     <td>{data.inteR_EXCHANGE_POINTS}</td>
                                     <td>{data.diV_SHARING}</td>
                                     <td>{data.division}</td>
-
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
                 </div>
             )}
-            <form style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '10px', margin: '10px',justifyContent:'space-around' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <label>Feeder ID
-                        <input type='text'/></label>
-                    <label>Feeder Name
-                        <input type='text' /></label>
-                    <label>Import
-                        <input type='text' /></label>
-                    <label>Export
-                        <input type='text' /></label>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <label>Remark
-                        <input type='text' /></label>
-                    <Button>Update Reading</Button>
-                </div>
-                <div style={{ display: 'flex', textAlign: 'end', alignContent: 'flex-end' }}>
-                    <Button variant="primary">Load Survey</Button>{' '}
-                    <Button variant="primary">Energy Pattern Monthly</Button>{' '}
-                    <Button variant="primary">Daily Max Min Value</Button>{' '}
-                    <Button variant="primary">Monthly Reading</Button>{' '}
-
-                </div>
-            </form>
+            <FeederForm />
         </>
     )
 }
