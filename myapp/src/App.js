@@ -1,14 +1,22 @@
 import React from "react";
-import Grid from "./TestComponent/Grid";
-import './App.css';
-const App = () => {
+import PhotoContextProvider from "./context/PhotoContext";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import SearchPhoto from "./Comp_ImageSearch/SearchPhoto";
+
+function App() {
+
   return (
-    <div className="App">
-      <div className="App-header">
-      <Grid />
-      </div>
-    </div>
+    <PhotoContextProvider>
+      <Router>
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<SearchPhoto />} />
+          </Routes>
+        </div>
+      </Router>
+    </PhotoContextProvider>
   );
-};
+}
 
 export default App;
